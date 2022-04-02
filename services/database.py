@@ -27,9 +27,9 @@ class MyDatabase:
         select_movie_SQL = "SELECT * FROM movie WHERE movie_id='{}'".format(movie_id)
         return self._cursor.execute(select_movie_SQL).fetchone()
     
-    def find_filter(self, movie_title):
-        print(movie_title)
-        select_movie_by_title_SQL = "SELECT * FROM movie WHERE title LIKE '%{}%'".format(movie_title)
+    def search_filter(self, search_field, search_key):
+        print(search_key)
+        select_movie_by_title_SQL = "SELECT * FROM movie WHERE {} LIKE '%{}%'".format(search_field, search_key)
         return self._cursor.execute(select_movie_by_title_SQL).fetchall()
 
         # self.cursor.execute(

@@ -10,14 +10,14 @@ class Movie(Resource):
                 return found_movie.to_dict()
             return {"message": "Movie not found"}, 404
         if title:
-            found_movies = MovieModel.find_movie_by_params(title)
+            found_movies = MovieModel.find_movie_by_params('title', title)
             if found_movies:
-                return MovieModel.list_to_dict(title)
+                return MovieModel.list_to_dict('title', title)
             return {"message": "Movie not found"}, 404
         if genre:
-            found_movies = MovieModel.find_movie_by_params(genre)
+            found_movies = MovieModel.find_movie_by_params('genre', genre)
             if found_movies:
-                return MovieModel.list_to_dict(title)
+                return MovieModel.list_to_dict('genre', genre)
             return {"message": "Movie not found"}, 404
         else:
             return MovieModel.list_to_dict()

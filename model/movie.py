@@ -30,9 +30,9 @@ class MovieModel:
         return found_movie
 
     @classmethod
-    def find_movie_by_params(cls, movie_title):
+    def find_movie_by_params(cls, field, key):
         found_movies = []
-        results = cls.database_service.find_filter(movie_title)
+        results = cls.database_service.search_filter(field, key)
         for res in results:
             found_movies.append(MovieModel(res[1], res[2], res[3], res[4], res[5], res[0]))
         return found_movies
@@ -46,9 +46,9 @@ class MovieModel:
         cls.database_service.edit_movie(movie)
  
     @classmethod
-    def list_to_dict(cls, filter=None):
-        if filter:
-            result = cls.database_service.find_filter(filter)
+    def list_to_dict(cls, field=None, key=None):
+        if field and key:
+            result = cls.database_service.search_filter(field, key)
         else:
             result = cls.database_service.list_movies()
         movie_list = []
