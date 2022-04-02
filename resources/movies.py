@@ -3,7 +3,7 @@ from model.movie import MovieModel
 from flask import Flask, request
 
 class Movie(Resource):
-    def get(self, id=None, title=None, genre=None):
+    def get(self, id=None, title=None, search=None, genre=None):
         if id:
             found_movie = MovieModel.find_movie(id)
             if found_movie:
@@ -13,6 +13,12 @@ class Movie(Resource):
             found_movies = MovieModel.find_movie_by_params('title', title)
             if found_movies:
                 return MovieModel.list_to_dict('title', title)
+            return {"message": "Movie not found"}, 404
+        if search:
+            found_movies = MovieModel.find_movie_by_params('title', search)
+            found_movies += MovieModel.find_movie_by_params('sinopsis', search) 
+            if found_movies:
+                return MovieModel.list_to_dict('search', search)
             return {"message": "Movie not found"}, 404
         if genre:
             found_movies = MovieModel.find_movie_by_params('genre', genre)

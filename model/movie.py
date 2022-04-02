@@ -48,7 +48,11 @@ class MovieModel:
     @classmethod
     def list_to_dict(cls, field=None, key=None):
         if field and key:
-            result = cls.database_service.search_filter(field, key)
+            if field == 'search':
+                result = cls.database_service.search_filter('title', key)
+                result += cls.database_service.search_filter('sinopsis', key)
+            else:
+                result = cls.database_service.search_filter(field, key)
         else:
             result = cls.database_service.list_movies()
         movie_list = []
@@ -64,7 +68,6 @@ class MovieModel:
             "genre": self.genre,
             "rating": self.rating,
             "year": self.year
-            #"cast": loads(dumps(self.cast, default=MovieModel.to_dict))
         }
 
     @classmethod

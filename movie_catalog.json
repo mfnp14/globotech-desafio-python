@@ -1,0 +1,30 @@
+[
+    {
+        "title": "Edge of tomorrow",
+        "sinopsis": "Best movie everrr",
+        "genre": "action",
+        "rating": 4,
+        "year": 2014
+    },
+    {
+        "title": "Harry Potter",
+        "sinopsis": "Most fabulous plot ever imagined",
+        "genre": "adventure",
+        "rating": 5,
+        "year": 2001
+    },
+    {
+        "title": "The Avengers",
+        "sinopsis": "Bunch of Marvel heroes fighting",
+        "genre": "action",
+        "rating": 4,
+        "year": 2012
+    },
+    {
+        "title": "Black Swan",
+        "sinopsis": "Intriguing drama story",
+        "genre": "drama",
+        "rating": 4,
+        "year": 2011
+    }
+]
