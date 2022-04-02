@@ -68,35 +68,3 @@ class Movie(Resource):
             MovieModel.update_movie(found_movie)
             return found_movie.to_dict()
         return {"message": "Movie not found"}, 404   
-
-
-class MovieTitle(Resource):
-    """def get(self, title=None):
-        if title:
-            found_movie = MovieModel.find_movie_by_params(title)
-            if found_movie:
-                return found_movie.to_dict()
-            return {"message": "Movie not found"}, 404
-        else:
-            return MovieModel.list_to_dict()"""
-
-    def get(self):
-        id = request.args.get('id')
-        title = request.args.get('title')
-        year = request.args.get('year')
-        genre = request.args.get('genre')
-
-        if id:
-            list_response_movies = MovieModel.find_movie_by_params(id)
-        if title:
-            newMovie = MovieModel.find_movie_by_params(title)
-            list_response_movies.append(newMovie)
-        if year:
-            newMovie = MovieModel.find_movie_by_params(year)
-            list_response_movies.append(newMovie)
-        if genre:
-            newMovie = MovieModel.find_movie_by_params(genre)
-            list_response_movies.append(newMovie)
-
-        return list_response_movies
-
