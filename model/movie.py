@@ -4,6 +4,7 @@ from services.database import MyDatabase
 
 class MovieModel:
     database_service: MyDatabase = None
+    movie_match = dict()
     def __init__(self, title, sinopsis, genre, rating, year, id=None) -> None:
         if id:
             self.id = id
@@ -47,27 +48,36 @@ class MovieModel:
  
     @classmethod
     def list_to_dict(cls, field=None, key=None):
+        movie_list = []
         if field and key:
             if field == 'search':
-                result = cls.database_service.search_filter('title', key)
-                result += cls.database_service.search_filter('sinopsis', key)
+                res1 = cls.database_service.search_filter('title', key)
+                for movie in res1:
+                    cls.movie_match[movie[0]] = 'title'
+                res2 = cls.database_service.search_filter('sinopsis', key)
+                for movie in res2:
+                    cls.movie_match[movie[0]] = 'sinopsis'
+                result = res1 + res2
+                for movie in (res1+res2):
+                    movie_list.append(MovieModel(movie[1], movie[2], movie[3], movie[4], movie[5], movie[0]))
+                return loads(dumps(movie_list, default=MovieModel.to_dict))
             else:
                 result = cls.database_service.search_filter(field, key)
         else:
             result = cls.database_service.list_movies()
-        movie_list = []
         for movie in result:
             movie_list.append(MovieModel(movie[1], movie[2], movie[3], movie[4], movie[5], movie[0]))
         return loads(dumps(movie_list, default=MovieModel.to_dict))
-
+        
     def to_dict(self):
-        return {
+        return{
             "id": self.id,
             "title": self.title,
             "sinopsis": self.sinopsis,
             "genre": self.genre,
             "rating": self.rating,
-            "year": self.year
+            "year": self.year,
+            "match": self.movie_match[self.id] if self.id in self.movie_match.keys() else None
         }
 
     @classmethod
